@@ -20,10 +20,7 @@ pub async fn event_loop(mut rx: mpsc::Receiver<(i32, u64)>) {
                 };
                 Effect::MakeNew(id, seconds)
             },
-            id = fuo.next(), if !fuo.is_empty() => {
-                let Some(id) = id else {
-                    panic!("fuo is not empty, but next yielded None");
-                };
+            Some(id) = fuo.next() => {
                 Effect::Finish(id)
             }
         };
